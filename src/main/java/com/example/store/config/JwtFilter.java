@@ -3,6 +3,8 @@ package com.example.store.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -43,5 +45,10 @@ public class JwtFilter extends GenericFilterBean {
 
 			chain.doFilter(req, res);
 		}
+	}
+
+	@ExceptionHandler
+	void handleIllegalArgumentException(ServletException e, HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 }
