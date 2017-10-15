@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OfferValidator {
+public class OfferValidator{
 
     public ResponseEntity<RestResponse> checkOffer(Offer offer){
         String response = "";
@@ -29,7 +29,7 @@ public class OfferValidator {
 
     private String addMessageIfNoDescription(String desc, String response){
         if(desc == null || desc.equals("")){
-            response += "Description is empty";
+            response += "Description is empty ";
         }
         return response;
     }

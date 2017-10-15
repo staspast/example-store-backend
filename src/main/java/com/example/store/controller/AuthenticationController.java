@@ -21,20 +21,16 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RegistrationValidator registrationValidator;
+
 
     @PostMapping(value = "/register")
     public ResponseEntity<RestResponse> registerUser(@RequestBody RegisterRequestDto user) {
-        ResponseEntity<RestResponse> responseEntity = registrationValidator.checkUser(user);
-        if(responseEntity.getStatusCode() == HttpStatus.OK) {
-            userService.register(user);
-        }
-        return responseEntity;
+
+        return userService.register(user);
     }
 
     @PostMapping(value = "/login")
-    public String login(@RequestBody User login) throws ServletException {
+    public ResponseEntity<RestResponse> login(@RequestBody User login) throws ServletException {
        return userService.login(login);
     }
 

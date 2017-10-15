@@ -9,15 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegistrationValidator {
+public class RegistrationValidator extends AbstractUserValidator {
 
     @Autowired private UserDao userDao;
 
     public ResponseEntity<RestResponse> checkUser(RegisterRequestDto user){
         String response = "";
         HttpStatus status = HttpStatus.OK;
+        response = addMessageIfUsernameIsEmpty(user.getUsername(), response);
+        response = addMessageIfPasswordIsEmpty(user.getPassword(), response);
         response = addMessageIfUserAlreadyExists(user.getUsername(), response);
-        response = addMessageIfPasswordsMissmatch(user.getPassword(), user.getPasswordRepeat(), response);
+        response = addMessageIfPasswordsMismatch(user.getPassword(), user.getPasswordRepeat(), response);
         if(!response.equals("")){
             status = HttpStatus.BAD_REQUEST;
         }
@@ -27,13 +29,6 @@ public class RegistrationValidator {
     private String addMessageIfUserAlreadyExists(String username, String response){
         if(userDao.findByUsername(username) != null){
             response += "User already exists ";
-        }
-        return response;
-    }
-
-    private String addMessageIfPasswordsMissmatch(String password, String passwordRepeat, String response){
-        if(!password.equals(passwordRepeat)){
-            response += "Passwords missmatch";
         }
         return response;
     }
