@@ -25,7 +25,7 @@ public class Offer {
     private String title;
 
     @Column(length = 500)
-    private String desc;
+    private String description;
 
     @Column
     private LocalDateTime dateAdded;

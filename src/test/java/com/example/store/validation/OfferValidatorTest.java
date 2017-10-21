@@ -71,26 +71,26 @@ public class OfferValidatorTest {
     //Private create test object methods
 
     private Offer createValidOffer(){
-        return Offer.builder().title("title").desc("description").build();
+        return Offer.builder().title("title").description("description").build();
     }
 
     private Offer createInvalidOfferWithEmptyTitle(){
-        return Offer.builder().title("").desc("description").build();
+        return Offer.builder().title("").description("description").build();
     }
 
     private Offer createInvalidOfferWithNullTitle(){
-        return Offer.builder().title("").desc("description").build();
+        return Offer.builder().title("").description("description").build();
     }
 
     private Offer createInvalidOfferWithEmptyDesc(){
-        return Offer.builder().title("title").desc("").build();
+        return Offer.builder().title("title").description("").build();
     }
 
     private Offer createInvalidOfferWithNullDesc(){
-        return Offer.builder().title("title").desc(null).build();
+        return Offer.builder().title("title").description(null).build();
     }
 
     private Offer createInvalidOfferWithNullDescAndTitle(){
-        return Offer.builder().title(null).desc(null).build();
+        return Offer.builder().title(null).description(null).build();
     }
 }

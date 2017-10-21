@@ -19,7 +19,7 @@ public class OfferValidator extends AbstractValidator {
         String response = "";
         HttpStatus status = HttpStatus.OK;
         response = addMessageIfStringValueIsEmpty(offer.getTitle(), response, "Title is empty ");
-        response = addMessageIfStringValueIsEmpty(offer.getDesc(), response, "Description is empty ");
+        response = addMessageIfStringValueIsEmpty(offer.getDescription(), response, "Description is empty ");
         if(!response.equals("")){
             status = HttpStatus.BAD_REQUEST;
         }

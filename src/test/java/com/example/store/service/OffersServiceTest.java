@@ -37,7 +37,7 @@ public class OffersServiceTest {
 
     @Before
     public void setUp(){
-        offer = Offer.builder().title("offer").desc("desc").build();
+        offer = Offer.builder().title("offer").description("desc").build();
     }
 
     @Test
