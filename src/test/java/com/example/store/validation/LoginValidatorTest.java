@@ -25,44 +25,44 @@ public class LoginValidatorTest {
     private LoginValidator loginValidator;
 
     @Test
-    public void shouldValidateValidUser(){
+    public void shouldValidateValidUser() throws Exception {
         User user = createValidUser();
         when(userDao.findByUsername("user")).thenReturn(createValidUser());
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(user);
+        ResponseEntity<RestResponse> responseEntity = loginValidator.check(user);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(responseEntity.getBody().getMessage(), "");
     }
 
     @Test
-    public void shouldInvalidateInvalidUserWithEmptyUsername(){
+    public void shouldInvalidateInvalidUserWithEmptyUsername() throws Exception {
         User user = createInvalidUserWithEmptyUsername();
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(user);
+        ResponseEntity<RestResponse> responseEntity = loginValidator.check(user);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Username is empty User does not exist ");
     }
 
     @Test
-    public void shouldInvalidateInvalidUserWithNullUsername(){
+    public void shouldInvalidateInvalidUserWithNullUsername() throws Exception {
         User user = createInvalidUserWithNullUsername();
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(user);
+        ResponseEntity<RestResponse> responseEntity = loginValidator.check(user);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Username is empty User does not exist ");
     }
 
     @Test
-    public void shouldInvalidateInvalidUserWithEmptyPassword(){
+    public void shouldInvalidateInvalidUserWithEmptyPassword() throws Exception {
         User user = createInvalidUserWithEmptyPassword();
         when(userDao.findByUsername("user")).thenReturn(createValidUser());
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(user);
+        ResponseEntity<RestResponse> responseEntity = loginValidator.check(user);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Password is empty Passwords mismatch ");
     }
 
     @Test
-    public void shouldInvalidateInvalidUserWithIncorrectPassword(){
+    public void shouldInvalidateInvalidUserWithIncorrectPassword() throws Exception {
         User user = createInvalidUserWithIncorrectPassword();
         when(userDao.findByUsername("user")).thenReturn(createValidUser());
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(user);
+        ResponseEntity<RestResponse> responseEntity = loginValidator.check(user);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Passwords mismatch ");
     }

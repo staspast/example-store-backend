@@ -1,5 +1,6 @@
 package com.example.store.service;
 
+import com.example.store.dto.OfferSearchDto;
 import com.example.store.model.dao.OffersDao;
 import com.example.store.model.entity.Offer;
 import com.example.store.rest.RestResponse;
@@ -27,10 +28,20 @@ public class OffersService {
         return list;
     }
 
+    public List<Offer> searchOffers(OfferSearchDto searchDto){
+        return offersDao.search(searchDto.getTitle(), searchDto.getDateFrom(), searchDto.getDateTo());
+    }
+
     public ResponseEntity<RestResponse> saveOffer(Offer offer){
-        ResponseEntity<RestResponse> response = offerValidator.checkOffer(offer);
-        if(response.getStatusCode() == HttpStatus.OK){
-            offersDao.save(offer);
+        ResponseEntity<RestResponse> response = null;
+        try {
+            response = offerValidator.check(offer);
+            if(response.getStatusCode() == HttpStatus.OK){
+                offersDao.save(offer);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         return response;
     }

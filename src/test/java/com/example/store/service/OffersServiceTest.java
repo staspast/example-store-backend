@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 
@@ -50,8 +49,8 @@ public class OffersServiceTest {
     }
 
     @Test
-    public void shouldSaveValidOffer(){
-        when(offerValidator.checkOffer(offer)).thenReturn(createValidResponse());
+    public void shouldSaveValidOffer() throws Exception {
+        when(offerValidator.check(offer)).thenReturn(createValidResponse());
 
         offersService.saveOffer(offer);
 
@@ -59,8 +58,8 @@ public class OffersServiceTest {
     }
 
     @Test
-    public void shouldNotSaveInvalidOffer(){
-        when(offerValidator.checkOffer(offer)).thenReturn(createInvalidResponse());
+    public void shouldNotSaveInvalidOffer() throws Exception {
+        when(offerValidator.check(offer)).thenReturn(createInvalidResponse());
 
         offersService.saveOffer(offer);
 

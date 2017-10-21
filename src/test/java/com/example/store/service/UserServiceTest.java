@@ -41,8 +41,8 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldRegisterValidUser(){
-        when(registrationValidator.checkUser(requestDto)).thenReturn(createValidResponse());
+    public void shouldRegisterValidUser() throws Exception {
+        when(registrationValidator.check(requestDto)).thenReturn(createValidResponse());
         when(storeMapper.map(requestDto, User.class)).thenReturn(user);
         userService.register(requestDto);
 
@@ -51,8 +51,8 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldNotRegisterInvalidUser(){
-        when(registrationValidator.checkUser(requestDto)).thenReturn(createInvalidResponse());
+    public void shouldNotRegisterInvalidUser() throws Exception {
+        when(registrationValidator.check(requestDto)).thenReturn(createInvalidResponse());
         userService.register(requestDto);
 
         verify(storeMapper, never()).map(requestDto, User.class);
@@ -60,16 +60,16 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldLoginValidUser(){
-        when(loginValidator.checkUser(user)).thenReturn(createValidResponse());
+    public void shouldLoginValidUser() throws Exception {
+        when(loginValidator.check(user)).thenReturn(createValidResponse());
         ResponseEntity<RestResponse> responseEntity = userService.login(user);
 
         assertTrue(responseEntity.getBody().getMessage().contains("Bearer"));
     }
 
     @Test
-    public void shouldNotLoginInvalidUser(){
-        when(loginValidator.checkUser(user)).thenReturn(createInvalidResponse());
+    public void shouldNotLoginInvalidUser() throws Exception {
+        when(loginValidator.check(user)).thenReturn(createInvalidResponse());
         ResponseEntity<RestResponse> responseEntity = userService.login(user);
 
         assertFalse(responseEntity.getBody().getMessage().contains("Bearer"));

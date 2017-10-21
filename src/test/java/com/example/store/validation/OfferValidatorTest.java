@@ -18,49 +18,49 @@ public class OfferValidatorTest {
     private OfferValidator offerValidator;
 
     @Test
-    public void shouldValidateValidOffer(){
+    public void shouldValidateValidOffer() throws Exception {
         Offer offer = createValidOffer();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
         assertEquals(responseEntity.getBody().getMessage(), "");
     }
 
     @Test
-    public void shouldInvalidateInvalidOfferWithEmptyTitle(){
+    public void shouldInvalidateInvalidOfferWithEmptyTitle() throws Exception {
         Offer offer = createInvalidOfferWithEmptyTitle();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Title is empty ");
     }
 
     @Test
-    public void shouldInvalidateInvalidOfferWithNullTitle(){
+    public void shouldInvalidateInvalidOfferWithNullTitle() throws Exception {
         Offer offer = createInvalidOfferWithNullTitle();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Title is empty ");
     }
 
     @Test
-    public void shouldInvalidateInvalidOfferWithEmptyDescription(){
+    public void shouldInvalidateInvalidOfferWithEmptyDescription() throws Exception {
         Offer offer = createInvalidOfferWithEmptyDesc();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Description is empty ");
     }
 
     @Test
-    public void shouldInvalidateInvalidOfferWithNullDescription(){
+    public void shouldInvalidateInvalidOfferWithNullDescription() throws Exception {
         Offer offer = createInvalidOfferWithNullDesc();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Description is empty ");
     }
 
     @Test
-    public void shouldInvalidateInvalidOfferWithNullTitleAndDescription(){
+    public void shouldInvalidateInvalidOfferWithNullTitleAndDescription() throws Exception {
         Offer offer = createInvalidOfferWithNullDescAndTitle();
-        ResponseEntity<RestResponse> responseEntity = offerValidator.checkOffer(offer);
+        ResponseEntity<RestResponse> responseEntity = offerValidator.check(offer);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
         assertEquals(responseEntity.getBody().getMessage(), "Title is empty Description is empty ");
     }

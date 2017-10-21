@@ -9,18 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginValidator extends AbstractUserValidator{
+public class LoginValidator extends AbstractValidator {
 
     @Autowired
     private UserDao userDao;
 
-
-    public ResponseEntity<RestResponse> checkUser(User user){
+    @Override
+    public ResponseEntity<RestResponse> check(Object o) throws Exception {
+        if(!(o instanceof User)){
+            throw new Exception("Wrong type exception");
+        }
+        User user = (User) o;
         String response = "";
         HttpStatus status = HttpStatus.OK;
 
-        response = addMessageIfUsernameIsEmpty(user.getUsername(), response);
-        response = addMessageIfPasswordIsEmpty(user.getPassword(), response);
+        response = addMessageIfStringValueIsEmpty(user.getUsername(), response, "Username is empty ");
+        response = addMessageIfStringValueIsEmpty(user.getPassword(), response, "Password is empty ");
         response = addMessageIfNoUserIsFoundOrPasswordIsIncorrect(user,response);
 
         if(!response.equals("")){
@@ -42,7 +46,6 @@ public class LoginValidator extends AbstractUserValidator{
     }
 
     private String addMessageIfPasswordIsIncorrect(User user, User existingUser, String response){
-        response = addMessageIfPasswordsMismatch(user.getPassword(), existingUser.getPassword(), response);
-        return response;
+        return addMessageIfStringsMismatch(user.getPassword(), existingUser.getPassword(), response, "Passwords mismatch ");
     }
 }

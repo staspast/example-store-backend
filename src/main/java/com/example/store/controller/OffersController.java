@@ -1,5 +1,6 @@
 package com.example.store.controller;
 
+import com.example.store.dto.OfferSearchDto;
 import com.example.store.model.entity.Offer;
 import com.example.store.rest.RestResponse;
 import com.example.store.service.OffersService;
@@ -19,6 +20,11 @@ public class OffersController {
     @GetMapping("/get")
     public List<Offer> getOffers(){
         return offersService.getAll();
+    }
+
+    @PostMapping("/search")
+    public List<Offer> searchOffers(@RequestBody OfferSearchDto searchDto){
+        return offersService.searchOffers(searchDto);
     }
 
     @PostMapping("/save")

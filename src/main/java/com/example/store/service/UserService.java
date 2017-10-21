@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
 import java.util.Date;
 
 @Service
@@ -27,21 +26,32 @@ public class UserService {
 
 
     public ResponseEntity<RestResponse> register(RegisterRequestDto requestDto){
-        ResponseEntity<RestResponse> responseEntity = registrationValidator.checkUser(requestDto);
-        if(responseEntity.getStatusCode() == HttpStatus.OK) {
-            User user = storeMapper.map(requestDto, User.class);
-            userDao.save(user);
+        ResponseEntity<RestResponse> responseEntity = null;
+        try {
+            responseEntity = registrationValidator.check(requestDto);
+            if(responseEntity.getStatusCode() == HttpStatus.OK) {
+                User user = storeMapper.map(requestDto, User.class);
+                userDao.save(user);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         return responseEntity;
     }
 
     public ResponseEntity<RestResponse> login(User login){
-        ResponseEntity<RestResponse> responseEntity = loginValidator.checkUser(login);
-        if(responseEntity.getStatusCode() == HttpStatus.OK){
-            responseEntity.getBody().setMessage("Bearer " + Jwts.builder().setSubject(login.getUsername()).claim("roles", "user").setIssuedAt(new Date())
-                    .signWith(SignatureAlgorithm.HS256, "secretkey").compact());
+        ResponseEntity<RestResponse> responseEntity = null;
+        try {
+            responseEntity = loginValidator.check(login);
+            if(responseEntity.getStatusCode() == HttpStatus.OK){
+                responseEntity.getBody().setMessage("Bearer " + Jwts.builder().setSubject(login.getUsername()).claim("roles", "user").setIssuedAt(new Date())
+                        .signWith(SignatureAlgorithm.HS256, "secretkey").compact());
+            }
         }
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return responseEntity;
     }
 
