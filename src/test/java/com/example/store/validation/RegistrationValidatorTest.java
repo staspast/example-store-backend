@@ -38,7 +38,7 @@ public class RegistrationValidatorTest {
         RegisterRequestDto requestDto = createInvalidRegistrationRequestWithEmptyUsername();
         ResponseEntity<RestResponse> responseEntity = validator.check(requestDto);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
-        assertEquals(responseEntity.getBody().getMessage(), "Username is empty ");
+        assertEquals(responseEntity.getBody().getMessage(), "Email is empty ");
     }
 
     @Test
@@ -46,7 +46,7 @@ public class RegistrationValidatorTest {
         RegisterRequestDto requestDto = createInvalidRegistrationRequestWithNullUsername();
         ResponseEntity<RestResponse> responseEntity = validator.check(requestDto);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
-        assertEquals(responseEntity.getBody().getMessage(), "Username is empty ");
+        assertEquals(responseEntity.getBody().getMessage(), "Email is empty ");
     }
 
     @Test
@@ -59,7 +59,7 @@ public class RegistrationValidatorTest {
 
     @Test
     public void shouldInvalidateValidRegistrationRequestThatAlreadyExists() throws Exception {
-        when(userDao.findByUsername("user")).thenReturn(User.builder().build());
+        when(userDao.findByEmail("johnny@edu.go")).thenReturn(User.builder().build());
         RegisterRequestDto requestDto = createValidRegistrationRequest();
         ResponseEntity<RestResponse> responseEntity = validator.check(requestDto);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
@@ -68,7 +68,7 @@ public class RegistrationValidatorTest {
 
     @Test
     public void shouldInvalidateValidRegistrationRequestThatAlreadyExistsAndPasswordMismatch() throws Exception {
-        when(userDao.findByUsername("user")).thenReturn(User.builder().build());
+        when(userDao.findByEmail("johnny@edu.go")).thenReturn(User.builder().build());
         RegisterRequestDto requestDto = createInvalidRegistrationRequestWithPasswordMismatch();
         ResponseEntity<RestResponse> responseEntity = validator.check(requestDto);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);
@@ -82,18 +82,18 @@ public class RegistrationValidatorTest {
     //Private create test object methods
 
     private RegisterRequestDto createValidRegistrationRequest(){
-        return RegisterRequestDto.builder().username("user").password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
+        return RegisterRequestDto.builder().password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
     }
 
     private RegisterRequestDto createInvalidRegistrationRequestWithEmptyUsername(){
-        return RegisterRequestDto.builder().username("").password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
+        return RegisterRequestDto.builder().password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email("").build();
     }
 
     private RegisterRequestDto createInvalidRegistrationRequestWithNullUsername(){
-        return RegisterRequestDto.builder().username(null).password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
+        return RegisterRequestDto.builder().password("qwer").passwordRepeat("qwer").firstName("Jon").lastName("Snow").email(null).build();
     }
 
     private RegisterRequestDto createInvalidRegistrationRequestWithPasswordMismatch(){
-        return RegisterRequestDto.builder().username("user").password("qwer").passwordRepeat("qwer1").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
+        return RegisterRequestDto.builder().password("qwer").passwordRepeat("qwer1").firstName("Jon").lastName("Snow").email("johnny@edu.go").build();
     }
 }

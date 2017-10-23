@@ -21,7 +21,7 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String username;
+    private String email;
 
     @Column
     private String password;
@@ -31,9 +31,6 @@ public class User {
 
     @Column
     private String lastName;
-
-    @Column
-    private String email;
 
     @OneToMany
     private List<Role> role;

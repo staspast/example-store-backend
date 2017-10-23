@@ -23,12 +23,11 @@ public class RegistrationValidator extends AbstractValidator {
         String response = "";
         HttpStatus status = HttpStatus.OK;
 
-        response = addMessageIfStringValueIsEmpty(user.getUsername(), response, "Username is empty ");
         response = addMessageIfStringValueIsEmpty(user.getPassword(), response, "Password is empty ");
         response = addMessageIfStringValueIsEmpty(user.getFirstName(), response, "First name is empty ");
         response = addMessageIfStringValueIsEmpty(user.getLastName(), response, "Last name is empty");
         response = addMessageIfStringValueIsEmpty(user.getEmail(), response, "Email is empty ");
-        response = addMessageIfUserAlreadyExists(user.getUsername(), response);
+        response = addMessageIfUserAlreadyExists(user.getEmail(), response);
         response = addMessageIfStringsMismatch(user.getPassword(), user.getPasswordRepeat(), response, "Passwords mismatch ");
 
         if(!response.equals("")){
@@ -37,8 +36,8 @@ public class RegistrationValidator extends AbstractValidator {
         return new ResponseEntity<>(new RestResponse(response), status);
     }
 
-    private String addMessageIfUserAlreadyExists(String username, String response){
-        if(userDao.findByUsername(username) != null){
+    private String addMessageIfUserAlreadyExists(String email, String response){
+        if(userDao.findByEmail(email) != null){
             response += "User already exists ";
         }
         return response;

@@ -36,8 +36,8 @@ public class UserServiceTest {
 
     @Before
     public void setUp(){
-        user = User.builder().username("user").password("user").build();
-        requestDto = RegisterRequestDto.builder().username("user").password("user").passwordRepeat("user").build();
+        user = User.builder().email("user@us.com").password("user").build();
+        requestDto = RegisterRequestDto.builder().email("user@us.com").password("user").passwordRepeat("user").build();
     }
 
     @Test

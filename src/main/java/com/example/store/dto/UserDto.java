@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class UserDto {
 
-    private String username;
+    private String email;
     private String password;
     private List<Role> roles;
 }

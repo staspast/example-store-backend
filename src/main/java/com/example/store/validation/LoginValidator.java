@@ -23,7 +23,7 @@ public class LoginValidator extends AbstractValidator {
         String response = "";
         HttpStatus status = HttpStatus.OK;
 
-        response = addMessageIfStringValueIsEmpty(user.getUsername(), response, "Username is empty ");
+        response = addMessageIfStringValueIsEmpty(user.getEmail(), response, "Email is empty ");
         response = addMessageIfStringValueIsEmpty(user.getPassword(), response, "Password is empty ");
         response = addMessageIfNoUserIsFoundOrPasswordIsIncorrect(user,response);
 
@@ -35,7 +35,7 @@ public class LoginValidator extends AbstractValidator {
 
 
     private String addMessageIfNoUserIsFoundOrPasswordIsIncorrect(User user, String response){
-        User existingUser = userDao.findByUsername(user.getUsername());
+        User existingUser = userDao.findByEmail(user.getEmail());
         if(existingUser == null){
             response += "User does not exist ";
         }

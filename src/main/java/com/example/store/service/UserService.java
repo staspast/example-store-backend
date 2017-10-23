@@ -45,7 +45,7 @@ public class UserService {
         try {
             responseEntity = loginValidator.check(login);
             if(responseEntity.getStatusCode() == HttpStatus.OK){
-                responseEntity.getBody().setMessage("Bearer " + Jwts.builder().setSubject(login.getUsername()).claim("roles", "user").setIssuedAt(new Date())
+                responseEntity.getBody().setMessage("Bearer " + Jwts.builder().setSubject(login.getEmail()).claim("roles", "user").setIssuedAt(new Date())
                         .signWith(SignatureAlgorithm.HS256, "secretkey").compact());
             }
         }
